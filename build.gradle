@@ -27,11 +27,18 @@ def watchForChange = 'src/**/*'
 def doOnChange = './gradlew classes'
 
 dependencies {
+  api "org.slf4j:slf4j-simple:1.7.21"
+
+  implementation "io.vertx:vertx-auth-jwt:$vertxVersion"
   implementation "io.vertx:vertx-web:$vertxVersion"
+  implementation "io.vertx:vertx-web-api-contract:$vertxVersion"
   implementation "io.vertx:vertx-pg-client:$vertxVersion"
   implementation "io.vertx:vertx-lang-kotlin-coroutines:$vertxVersion"
   implementation "io.vertx:vertx-lang-kotlin:$vertxVersion"
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+  implementation "io.vertx:vertx-config-yaml:$vertxVersion"
+  implementation "org.mindrot:jbcrypt:0.4"
+
   testImplementation "io.vertx:vertx-junit5:$vertxVersion"
   testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion"
   testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterEngineVersion"
@@ -63,5 +70,6 @@ test {
 }
 
 run {
-  args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
+//  args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
+  args = ['run', mainVerticleName, "--launcher-class=$mainClassName"]
 }

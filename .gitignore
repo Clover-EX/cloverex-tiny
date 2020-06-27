@@ -88,6 +88,8 @@ cmake-buildTool-debug/
 
 # IntelliJ
 /out/
+build
+.idea/*
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -183,3 +185,6 @@ nbdist/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+### Config file ###
+src/main/resources/*
