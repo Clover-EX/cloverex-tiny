@@ -57,7 +57,6 @@ fun RowSet<Row>.toJsonArray(): JsonArray = asSequence().map { row ->
   json
 }.toList().run { JsonArray(this) }
 
-
 fun OpenAPI3RouterFactory.addCoroutineHandlerByOperationId(
   operationId: String,
   fn: suspend (RoutingContext) -> Unit

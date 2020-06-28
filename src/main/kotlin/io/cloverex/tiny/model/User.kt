@@ -8,6 +8,8 @@ import java.time.LocalDateTime
 data class User(
   val id: Int,
   val username: String,
+  val realName: String,
+  val email: String,
   val password: String,
   val role: Short,
   val enable: Boolean,
