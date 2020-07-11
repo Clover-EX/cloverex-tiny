@@ -43,8 +43,7 @@ class HttpServerVerticle : CoroutineVerticle() {
       if (res.getInteger("status") == 200) {
         val claims = JsonObject().put("username", username).put("role", res.getInteger("role"))
         val accessToken = provider.generateToken(claims, JWTOptions().setExpiresInMinutes(24 * 60))
-        rc.response().putHeader("x-access-token", accessToken)
-        rc.response().end()
+        rc.response().end(JsonObject().put("access_token", accessToken).encodePrettily())
       } else {
         rc.response().end(res.encodePrettily())
       }
