@@ -1,5 +1,6 @@
 package io.cloverex.tiny
 
+import io.cloverex.tiny.service.impl.ContestServiceImpl
 import io.cloverex.tiny.service.impl.UserServiceImpl
 import io.vertx.core.json.JsonObject
 import io.vertx.kotlin.coroutines.CoroutineVerticle
@@ -23,6 +24,7 @@ class DatabaseVerticle : CoroutineVerticle() {
     ).getConnectionAwait()
 
     val userService = UserServiceImpl(connection)
+    val contestService = ContestServiceImpl(connection)
 
     vertx.eventBus().localConsumer<JsonObject>("user.login") { msg ->
       GlobalScope.launch(vertx.dispatcher()) {
@@ -33,6 +35,18 @@ class DatabaseVerticle : CoroutineVerticle() {
     vertx.eventBus().localConsumer<JsonObject>("user.register") { msg ->
       GlobalScope.launch(vertx.dispatcher()) {
         msg.reply(userService.register(msg.body()))
+      }
+    }
+
+    vertx.eventBus().localConsumer<JsonObject>("contest.getAll") { msg ->
+      GlobalScope.launch(vertx.dispatcher()) {
+        msg.reply(contestService.getAllContests(msg.body()))
+      }
+    }
+
+    vertx.eventBus().localConsumer<JsonObject>("contest.create") { msg ->
+      GlobalScope.launch(vertx.dispatcher()) {
+        msg.reply(contestService.createContest(msg.body()))
       }
     }
   }

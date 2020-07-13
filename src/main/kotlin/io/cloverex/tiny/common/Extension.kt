@@ -72,3 +72,19 @@ fun OpenAPI3RouterFactory.addCoroutineHandlerByOperationId(
   }
   return this
 }
+
+fun OpenAPI3RouterFactory.addSecurityCoroutineHandler(
+  securityScheme: String,
+  fn: suspend (RoutingContext) -> Unit
+): OpenAPI3RouterFactory {
+  addSecurityHandler(securityScheme) { rc ->
+    GlobalScope.launch(rc.vertx().dispatcher()) {
+      try {
+        fn(rc)
+      } catch (e: Exception) {
+        rc.fail(401)
+      }
+    }
+  }
+  return this
+}
